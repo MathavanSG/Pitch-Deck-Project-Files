@@ -21,6 +21,13 @@ from htmlTemplate import css,bot_template,user_template
 from langchain.chains.summarize import load_summarize_chain
 from transformers import pipeline
 
+import streamlit as st
+from langchain.utilities import DuckDuckGoSearchAPIWrapper
+from bs4 import BeautifulSoup
+import requests
+import json
+
+
 def summarize_text(raw_text):
     summarizer = pipeline("summarization", model="t5-base", tokenizer="t5-base", framework="tf")
     summary = summarizer(raw_text, max_length=1000, min_length=150, do_sample=False)[0]['summary_text']
@@ -97,6 +104,27 @@ def is_pdf(file):
     except Exception as e:
         pass
     return False
+
+ddg_search = DuckDuckGoSearchAPIWrapper()
+
+RESULTS_PER_QUESTION = 3
+
+def web_search(query: str, num_results: int = RESULTS_PER_QUESTION):
+    results = ddg_search.results(query, num_results)
+    return [r["link"] for r in results]
+
+def scrape_text(url: str):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, "html.parser")
+            page_text = soup.get_text(separator=" ", strip=True)
+            return page_text
+        else:
+            return f"Failed to retrieve the webpage: Status code {response.status_code}"
+    except Exception as e:
+        return f"Failed to retrieve the webpage: {e}"
+
 
 
 def main():
