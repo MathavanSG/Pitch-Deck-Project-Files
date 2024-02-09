@@ -308,8 +308,8 @@ def main():
                 st.write(report)
                 st.session_state.chat_history.append(report)
                 report_output = f"Research report for '{user_question}':\n{report}"
-                vectorstore_report = get_vectorstore(report)
-                st.session_state.conversation = get_conversation(vectorstore_report)
+                text_chunks_r = get_text_chunks(report_output)
+                vectorstore_report = get_vectorstore(text_chunks_r)
             
                
                 pdf_content = generate_pdf_report(report_output)
@@ -317,6 +317,7 @@ def main():
                 # Provide download link for the generated PDF report
                 if st.download_button(label="Download your Research Report", data=pdf_content, file_name=f"research_report_{user_question}.pdf", mime="application/pdf"):
                     st.success("Happy Researching with CyberSnow")
+                st.session_state.conversation = get_conversation(vectorstore_report)
             
 
     # Chatbot interaction
