@@ -1,0 +1,26 @@
+Project Name: CyberSnow (PitchDeck-Integrated Chatbot and Research Assistant)
+
+Description:
+This project aims to create an integrated system that serves as both a chatbot and a research assistant. 
+The chatbot allows users to upload pdf file and  interact with the system by asking questions,
+while the research assistant component generates detailed reports based on user queries and also allows the users to chat and interact with the findings.
+
+Requirements:
+- Python 3.6 or higher
+- Streamlit
+- Pytesseract
+- Python-dotenv
+- PyPDF2
+- pdf2image
+- langchain
+- transformers
+- Beautiful Soup (bs4)
+- ReportLab
+
+Installation:
+1. Install Python 3.6 or higher.
+2. Install required Python packages using pip:
+
+Additional Notes:
+- Ensure that Tesseract OCR,Poppler  is installed and properly configured for pytesseract to work.
+- Check and update file paths and configurations as needed, especially for Tesseract OCR and other external dependencies.
